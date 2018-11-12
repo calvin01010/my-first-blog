@@ -8,7 +8,11 @@
       <div>
       <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
       <p>{{ post.text|linebreaksbr}}</p>
+      {% if user.is_authenticated and post.approved_comments.count < post.comments.count %}
+      <a href="{% url 'post_detail' pk=post.pk %}">Comments awaiting moderation</a>
+      {% else %}
       <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+      {% endif %}
     </div>
     <hr>
   {% endfor %}
